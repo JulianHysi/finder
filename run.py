@@ -1,7 +1,10 @@
+from os import environ
 from flask import Flask
 from flask import render_template
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 
 static_data = [{'name':'Genci', 'email':'genci@mail.com'},
                {'name':'Mondi', 'email':'mondi@mail.com'},
