@@ -1,6 +1,7 @@
 from os import environ
 from flask import Flask
 from flask import render_template
+from forms import SignUpForm, LogInForm
 
 app = Flask(__name__)
 
@@ -23,6 +24,17 @@ def about():
 @app.route('/users')
 def users():
 	return render_template('users.html', data=static_data)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+	form = SignUpForm()
+	return render_template('signup.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	form = LogInForm()
+	return render_template('login.html', form=form)
  
 if __name__ == '__main__':
 	app.run(debug=True)
