@@ -27,5 +27,11 @@ dependencies:
   - wheel=0.34.2=py38_0
   - xz=5.2.5=h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
+  - pip:
+    - dnspython==1.16.0
+    - email-validator==1.1.0
+    - flask-wtf==0.14.3
+    - idna==2.9
+    - wtforms==2.3.1
 prefix: /home/julian/anaconda3/envs/finder_env
 
