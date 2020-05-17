@@ -1,6 +1,9 @@
 from os import environ
 from flask import Flask
 from flask import render_template
+from flask import flash
+from flask import redirect
+from flask import url_for
 from forms import SignUpForm, LogInForm
 
 app = Flask(__name__)
@@ -29,6 +32,9 @@ def users():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	form = SignUpForm()
+	if form.validate_on_submit():
+		flash(f'The account {form.username.data} was created successfully', 'success')
+		return redirect(url_for('index'))
 	return render_template('signup.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
