@@ -38,7 +38,7 @@ def login():
     form = LogInForm()
     if form.validate_on_submit():
         if form.username.data == 'user1' and form.password.data == '123456':
-            flash('You have been logged in!', 'success')
+            flash('You have been logged in!', 'info')
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful. Please check username and password.', 'danger')
