@@ -10,6 +10,7 @@ Version control system used: Git
 
 Environment variables you need to set:
 SECRET_KEY
+DATABASE_URI
 Note: we use a particular Anaconda workflow to set/unset the values of these variables whenever our virtual environment is
 activated/deactivated, so as not to conflict with variables of the same name needed for other projects or OS-wide. And while 
 we do reccommend that, you can still follow along just fine setting environment variables the traditional way.
