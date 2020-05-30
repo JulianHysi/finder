@@ -6,6 +6,9 @@ from finder import app
 from finder.forms import SignUpForm, LogInForm
 from finder import db, bcrypt
 from finder.models import User
+from flask_login import login_user
+from flask_login import current_user
+from flask_login import logout_user
 
 
 static_data = [{'name':'Genci', 'email':'genci@mail.com'},
@@ -29,6 +32,8 @@ def users():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = SignUpForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -44,11 +49,19 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LogInForm()
     if form.validate_on_submit():
-        if form.username.data == 'user1' and form.password.data == '123456':
-            flash('You have been logged in!', 'info')
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful. Please check username and password.', 'danger')
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
