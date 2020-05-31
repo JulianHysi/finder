@@ -11,11 +11,6 @@ from flask_login import current_user
 from flask_login import logout_user
 
 
-static_data = [{'name':'Genci', 'email':'genci@mail.com'},
-               {'name':'Mondi', 'email':'mondi@mail.com'},
-               {'name':'Berti', 'email':'berti@mail.com'}
-]
-
 @app.route('/')
 @app.route('/home')
 def index():
@@ -24,11 +19,6 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-@app.route('/users')
-def users():
-    return render_template('users.html', data=static_data)
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
