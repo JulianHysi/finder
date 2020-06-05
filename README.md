@@ -31,10 +31,18 @@ To deactivate the environment, hit 'conda deactivate'. Refer to Anaconda docs fo
 
 Note: If you install new packages or remove/update existing ones, you are merely updating the conda environment, which resides
 outside your local repo root directory, and the changes are therefore not tracked by source control.
-If you would like to push those changes remotely, follow these steps:
+If you would like to push those changes remotely (which you should), follow these steps:
+-hit 'conda env export > environment.yaml' while in project's top level dir, to reflect the changes to the environment file
+-open 'environment.yaml' and verify that its contents have indeed been updated
+-don't forget to include 'environment.yaml' in the coming commit
+
+If another contributor has gone through the above mentioned process, and you pulled the changes in, then your anaconda environment is 
+likely not up to date, and the project may not even run anymore due to missing dependencies.
+You can view the new contents of 'environment.yaml' and manually update your environment to match those exact dependencies, but a 
+more practical way is to update the environment with the following steps:
 -hit 'conda deactivate' to deactivate the environment, as it can sometimes lead to problems if it's activated
--hit 'conda env update -f environment.yaml --prune' to update the environment file with the latest changes
--hit 'conda activate' to go back to working and/or push the change remotely
+-hit 'conda env update -f environment.yaml --prune' to update the environment based on a file with the latest dependencies
+-hit 'conda activate' to go back to working
 Read the Anaconda docs for more.
 
 If you don't have Anaconda installed and/or would rather use other tools (venv, virtualenv etc) to manage virtual 
