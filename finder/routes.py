@@ -34,6 +34,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         flash(f'The account {username} was created successfully', 'success')
+        login_user(user)
         return redirect(url_for('index'))
     return render_template('signup.html', form=form)
 
