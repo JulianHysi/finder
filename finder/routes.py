@@ -1,15 +1,9 @@
-from flask import render_template
-from flask import flash
-from flask import redirect
-from flask import url_for
-from finder import app
+from flask import render_template, flash, redirect, url_for
+from flask_login import login_user, current_user, logout_user, login_required
+
+from finder import app, db, bcrypt
 from finder.forms import SignUpForm, LogInForm
-from finder import db, bcrypt
 from finder.models import User
-from flask_login import login_user
-from flask_login import current_user
-from flask_login import logout_user
-from flask_login import login_required
 
 
 @app.route('/')

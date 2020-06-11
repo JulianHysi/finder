@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+
 from finder.models import User
 
 
@@ -31,4 +32,3 @@ class LogInForm(FlaskForm):
     password = PasswordField('Password', 
                              validators=[DataRequired(), Length(min=5, max=15)])
     submit = SubmitField('Log In')
-        
