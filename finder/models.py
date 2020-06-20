@@ -1,3 +1,19 @@
+"""Create the models to feed to the ORM.
+
+Create the model classes extending the Model base class of SQLAlchemy.
+
+
+Classes:
+
+    User
+    Profile
+
+Functions:
+
+    load_user(int) -> object
+"""
+
+
 from datetime import datetime
 
 from flask_login import UserMixin
@@ -12,7 +28,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
-    """Map the user table (with an ORM)
+    """Create the user table fields and relationships.
 
     Contain user information fields needed by the system (i.e. auth).
     Link to the profile table with a 1-to-1 relationship.
@@ -30,7 +46,7 @@ class User(db.Model, UserMixin):
 
 
 class Profile(db.Model):
-    """Map the profile table (with an ORM)
+    """Create the profile table fields and relationships.
 
     Contain profile information fields needed by other users (i.e. contact search).
     Link to the user table with a user_id Foreign Key field.

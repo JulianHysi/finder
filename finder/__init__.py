@@ -1,3 +1,25 @@
+"""Set up the imports, variables and configuration for the package.
+
+Import the necessary third party packages.
+Create an instance of the Flask application.
+Configurate the secret key and database URI of the application.
+Create the variables needed to be shared throughout the package.
+
+Modules:
+
+    models
+    routes
+    forms
+
+Variables:
+    
+    app
+    db
+    bcrypt
+    login_manager
+"""
+
+
 from os import environ
 
 from flask import Flask

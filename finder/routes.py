@@ -1,3 +1,19 @@
+"""Create the route functions needed for navigating the application.
+
+Use the route decorator of the Flask class on every function.
+Use the render_template function of the flask package to render html pages.
+
+Functions:
+
+    index() -> string
+    about() -> string
+    signup() -> string
+    login() -> string
+    logout() -> string
+    profile() -> string
+"""
+
+
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 

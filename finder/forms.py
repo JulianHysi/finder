@@ -1,3 +1,15 @@
+"""Create the forms of the application.
+
+Create the form classes extending the base class FlaskForm.
+Validate form fields.
+
+Classes:
+
+    SignUpForm
+    LogInForm
+"""
+
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
