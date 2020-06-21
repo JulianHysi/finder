@@ -14,7 +14,7 @@ Functions:
 """
 
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 
 from finder import app, db, bcrypt
@@ -69,7 +69,8 @@ def login():
     If the user is already authenticated, redirect them to the home page.
     Render the login template.
     If the form validates, and a user with such credentials exists:
-    Log them in and redirect them to the home page.
+        Log them in and redirect them to the home page.
+        But if they were trying to access a login-required page, redirect to it.
     If the form doesn't validate, re-render the login template.
     """
     if current_user.is_authenticated:
@@ -79,7 +80,11 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect(url_for('index'))
         else:
             flash('Login unsuccessful. Please check username and password.', 'danger')
     return render_template('login.html', form=form)
