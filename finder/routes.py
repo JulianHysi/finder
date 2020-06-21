@@ -19,7 +19,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 from finder import app, db, bcrypt
 from finder.forms import SignUpForm, LogInForm
-from finder.models import User
+from finder.models import User, Profile
 
 
 @app.route('/')
@@ -101,4 +101,5 @@ def logout():
 @login_required
 def profile():
     """Return the route for the profile page."""
-    return render_template('profile.html')
+    profile = current_user.profile
+    return render_template('profile.html', profile=profile)

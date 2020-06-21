@@ -1,5 +1,16 @@
 {% extends 'layout.html' %}
 {% block body %}
-        <h1>User profile</h1>
-        <p>Page under construction</p>
+   	<div class="media">
+	  	<div class="media-body">
+		    <h4 class="mt-2">{{ profile.parent }}</h4>
+		    <p>{{ profile.full_name }}</p>
+		    <p>{{ profile.nick_name }}</p>
+		    <p>{{ profile.email }}</p>
+		    <p>{{ profile.phone_number }}</p>
+		    <p>{{ profile.address }}</p>
+		    <p>{{ profile.birth_date }}</p>
+		    <p>{{ profile.birth_place }}</p>
+		    <p>{{ profile.website }}</p>
+	  	</div>
+	</div>
 {% endblock %}
