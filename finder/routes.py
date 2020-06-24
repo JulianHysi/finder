@@ -42,6 +42,7 @@ def signup():
     If the user is already authenticated, redirect them to the home page.
     Render the signup template.
     If the form validates, create the user and log them in.
+    Create also the (empty) profile for that user.
     After that, redirect them home.
     If the form doesn't validate, re-render the signup template.
     """
@@ -55,6 +56,9 @@ def signup():
         hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
         user = User(username=username, email=email, password=hashed_pwd)
         db.session.add(user)
+        user_id = User.query.filter_by(username=user.username).first().id
+        profile = Profile(user_id=user_id)
+        db.session.add(profile)
         db.session.commit()
         flash(f'The account {username} was created successfully', 'success')
         login_user(user)
