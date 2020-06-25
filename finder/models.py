@@ -42,7 +42,11 @@ class User(db.Model, UserMixin):
     profile = db.relationship('Profile', backref='parent', uselist=False)
 
     def __repr__(self):
-        return f'Username: {self.username}, Email: {self.email}\n'
+        return f"User(username='{self.username}', email='{self.email}', " \
+                    f"password='{self.password}')"
+
+    def __str__(self):
+        return f'User account @{self.username}'
 
 
 class Profile(db.Model):
@@ -64,4 +68,15 @@ class Profile(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
     def __repr__(self):
-        return f'Full Name: {self.full_name}, Phone: {self.phone_number}\n'
+        return f"Profile(full_name='{self.full_name}', " \
+                       f"nick_name='{self.phone_number}' " \
+                       f"email='{self.email}', " \
+                       f"phone_number='{self.phone_number}', " \
+                       f"address='{self.address}', " \
+                       f"profile_pic='{self.profile_pic}', " \
+                       f"birth_date='{self.birth_date}', " \
+                       f"birth_place='{self.birth_place}', " \
+                       f"website='{self.website}')"
+
+    def __str__(self):
+        return f'Profile of {self.parent}'
