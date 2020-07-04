@@ -7,12 +7,16 @@ Classes:
 
     SignUpForm
     LogInForm
+    UpdateProfileForm
 """
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+    DateField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, \
+    ValidationError
 
 from finder.models import User
 
@@ -20,13 +24,13 @@ from finder.models import User
 class SignUpForm(FlaskForm):
     """Use this class to create a signup form"""
 
-    username = StringField('Username', 
-                           validators=[DataRequired(), Length(min=5, max=12)])
+    username = StringField(
+        'Username', validators=[DataRequired(), Length(min=5, max=12)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', 
-                             validators=[DataRequired(), Length(min=5, max=15)])
-    confirm_password = PasswordField('Confirm password', 
-                                     validators=[EqualTo('password')])
+    password = PasswordField(
+        'Password', validators=[DataRequired(), Length(min=5, max=15)])
+    confirm_password = PasswordField(
+        'Confirm password', validators=[EqualTo('password')])
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
@@ -43,10 +47,28 @@ class SignUpForm(FlaskForm):
 
 
 class LogInForm(FlaskForm):
-    """Use this class to create a login form"""
+    """Use this class to create a login form."""
 
-    username = StringField('Username', 
-                           validators=[DataRequired(), Length(min=5, max=12)])
-    password = PasswordField('Password', 
-                             validators=[DataRequired(), Length(min=5, max=15)])
+    username = StringField(
+        'Username', validators=[DataRequired(), Length(min=5, max=12)])
+    password = PasswordField(
+        'Password', validators=[DataRequired(), Length(min=5, max=15)])
     submit = SubmitField('Log In')
+
+
+class UpdateProfileForm(FlaskForm):
+    """Use this class to create the profile form."""
+
+    profile_pic = FileField(
+        'Update profile picture', 
+        validators=[FileAllowed(['jpeg', 'jpg', 'png'])])
+    full_name = StringField('Full name', validators=[Length(max=60)])
+    nick_name = StringField('Nickname', validators=[Length(max=60)])
+    email = StringField('Email', validators=[Email()])
+    phone_num = StringField('Phone number', validators=[Length(max=30)])
+    address = StringField('Address', validators=[Length(max=60)])
+    birth_date = DateField('Birth date')
+    birth_place = StringField('Birth place', validators=[Length(max=60)])
+    website = StringField('Website', validators=[Length(max=60)])
+
+    submit = SubmitField('Update')

@@ -11,6 +11,8 @@ Functions:
     login() -> string
     logout() -> string
     profile() -> string
+    update_profile(form -> UpdateProfileForm, profile -> Profile)
+    prefill_profile_form(form -> UpdateProfileForm, profile -> Profile)
 """
 
 
@@ -18,7 +20,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
 
 from finder import app, db, bcrypt
-from finder.forms import SignUpForm, LogInForm
+from finder.forms import SignUpForm, LogInForm, UpdateProfileForm
 from finder.models import User, Profile
 
 
@@ -101,9 +103,50 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     """Return the route for the profile page."""
     profile = current_user.profile
-    return render_template('profile.html', profile=profile)
+    form = UpdateProfileForm()
+    if form.validate_on_submit():
+        update_profile(form, profile)
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        prefill_profile_form(form, profile)
+    return render_template('profile.html', profile=profile, form=form)
+
+def update_profile(form, profile):
+    """Update the profile with the posted data.
+
+    Use this function for POST requests on the profile route.
+    Update the profile of the current user,
+    with the data posted on the profile form.
+    Commit the changes to the db, and display a message.
+    """
+    profile.full_name = form.full_name.data
+    profile.nick_name = form.nick_name.data
+    profile.email = form.email.data
+    profile.phone_number = form.phone_num.data
+    profile.address = form.address.data
+    profile.birth_date = form.birth_date.data
+    profile.birth_place = form.birth_place.data
+    profile.website = form.website.data
+    db.session.commit()
+    flash('Profile information has been updated', 'info')
+
+def prefill_profile_form(form, profile):
+    """Prefill the profile form with the existing data.
+    
+    Use this function for GET requests on the profile route.
+    Fill the profile form fields with existing data,
+    so that when the form loads, it is already completed.
+    """
+    form.full_name.data = profile.full_name
+    form.nick_name.data = profile.nick_name
+    form.email.data = profile.email
+    form.phone_num.data = profile.phone_number
+    form.address.data = profile.address
+    form.birth_date.data = profile.birth_date
+    form.birth_place.data = profile.birth_place
+    form.website.data = profile.website

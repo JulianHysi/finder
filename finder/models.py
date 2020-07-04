@@ -46,7 +46,7 @@ class User(db.Model, UserMixin):
                     f"password='{self.password}')"
 
     def __str__(self):
-        return f'User account @{self.username}'
+        return f'@{self.username}'
 
 
 class Profile(db.Model):
@@ -61,7 +61,7 @@ class Profile(db.Model):
     email = db.Column(db.String(60))
     phone_number = db.Column(db.String(30))
     address = db.Column(db.String(60))
-    profile_pic = db.Column(db.String(60))
+    profile_pic = db.Column(db.String(60), default='default.png')
     birth_date = db.Column(db.DateTime)
     birth_place = db.Column(db.String(60))
     website = db.Column(db.String(60))
@@ -69,14 +69,14 @@ class Profile(db.Model):
 
     def __repr__(self):
         return f"Profile(full_name='{self.full_name}', " \
-                       f"nick_name='{self.phone_number}' " \
-                       f"email='{self.email}', " \
-                       f"phone_number='{self.phone_number}', " \
-                       f"address='{self.address}', " \
-                       f"profile_pic='{self.profile_pic}', " \
-                       f"birth_date='{self.birth_date}', " \
-                       f"birth_place='{self.birth_place}', " \
-                       f"website='{self.website}')"
+            f"nick_name='{self.phone_number}', " \
+            f"email='{self.email}', " \
+            f"phone_number='{self.phone_number}', " \
+            f"address='{self.address}', " \
+            f"profile_pic='{self.profile_pic}', " \
+            f"birth_date='{self.birth_date}', " \
+            f"birth_place='{self.birth_place}', " \
+            f"website='{self.website}')"
 
     def __str__(self):
         return f'Profile of {self.parent}'

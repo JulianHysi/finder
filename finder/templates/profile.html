@@ -1,16 +1,147 @@
 {% extends 'layout.html' %}
 {% block body %}
    	<div class="media">
+
 	  	<div class="media-body">
-		    <h4 class="mt-2">{{ profile.parent }}</h4>
-		    <p>{{ profile.full_name }}</p>
-		    <p>{{ profile.nick_name }}</p>
-		    <p>{{ profile.email }}</p>
-		    <p>{{ profile.phone_number }}</p>
-		    <p>{{ profile.address }}</p>
-		    <p>{{ profile.birth_date }}</p>
-		    <p>{{ profile.birth_place }}</p>
-		    <p>{{ profile.website }}</p>
-	  	</div>
+
+		    <!-- <img class="profile-pic" src="{{ url_for('static', filename='pictures/profile_pics/' + profile.profile_pic) }}"> -->
+	
+			<form method="POST" action="">
+
+				{{ form.hidden_tag() }}
+
+				<fieldset class="form-group">
+
+					<legend class="border-bottom mb-3 pb-2">{{ profile.parent }} - update profile information</legend>
+
+					<!-- Full name -->
+					<div class="form-group">
+						{{ form.full_name.label(class="form-control-label") }}
+
+						{% if form.full_name.errors %}
+							{{ form.full_name(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.full_name.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.full_name(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Nickname -->
+					<div class="form-group">
+						{{ form.nick_name.label(class="form-control-label") }}
+
+						{% if form.nick_name.errors %}
+							{{ form.nick_name(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.nick_name.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.nick_name(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Email -->
+					<div class="form-group">
+						{{ form.email.label(class="form-control-label") }}
+
+						{% if form.email.errors %}
+							{{ form.email(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.email.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.email(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Phone number -->
+					<div class="form-group">
+						{{ form.phone_num.label(class="form-control-label") }}
+
+						{% if form.phone_num.errors %}
+							{{ form.phone_num(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.phone_num.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.phone_num(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Address -->
+					<div class="form-group">
+						{{ form.address.label(class="form-control-label") }}
+
+						{% if form.address.errors %}
+							{{ form.address(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.address.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.address(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Birth date -->
+					<div class="form-group">
+						{{ form.birth_date.label(class="form-control-label") }}
+						{{ form.birth_date(type='date', class="form-control form-control-lg") }}
+					</div>
+
+					<!-- Birth place -->
+					<div class="form-group">
+						{{ form.birth_place.label(class="form-control-label") }}
+
+						{% if form.birth_place.errors %}
+							{{ form.birth_place(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.birth_place.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.birth_place(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Website -->
+					<div class="form-group">
+						{{ form.website.label(class="form-control-label") }}
+
+						{% if form.website.errors %}
+							{{ form.website(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.website.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.website(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+				</fieldset>
+
+				<!-- Submit button -->
+				<div class="form-group">
+					{{ form.submit(class="btn btn-outline-primary") }}
+				</div>
+
+			</form>
+
+		</div>
+
 	</div>
 {% endblock %}
