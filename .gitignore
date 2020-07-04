@@ -136,3 +136,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Profile pictures
+finder/static/pictures/profile_pics/*

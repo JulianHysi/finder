@@ -12,12 +12,17 @@ Functions:
     logout() -> string
     profile() -> string
     update_profile(form -> UpdateProfileForm, profile -> Profile)
+    update_profile_pic(profile -> Profile, picture_file -> file object)
     prefill_profile_form(form -> UpdateProfileForm, profile -> Profile)
 """
 
 
+import os
+import secrets
+
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, current_user, logout_user, login_required
+from PIL import Image
 
 from finder import app, db, bcrypt
 from finder.forms import SignUpForm, LogInForm, UpdateProfileForm
@@ -106,7 +111,11 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    """Return the route for the profile page."""
+    """Handle loading and updating profile information.
+
+    Update the profile if the form is posted correctly.
+    Load the prefilled profile form on a GET request.
+    """
     profile = current_user.profile
     form = UpdateProfileForm()
     if form.validate_on_submit():
@@ -132,8 +141,35 @@ def update_profile(form, profile):
     profile.birth_date = form.birth_date.data
     profile.birth_place = form.birth_place.data
     profile.website = form.website.data
+
+    if form.profile_pic.data:
+        update_profile_pic(profile, form.profile_pic.data)
+
     db.session.commit()
     flash('Profile information has been updated', 'info')
+
+def update_profile_pic(profile, picture_file):
+    """Update the profile picture with the form posted file.
+
+    Generate a random 128 bit hex.
+    Get the extension of the uploaded file.
+    Combine the 2 above to create a new and unique filename.
+    Resize the uploaded picture to the wanted dimensions.
+    Save the resized picture in the file system proper path.
+    Update the profile_pic field on the db record.
+    """
+    random_hex = secrets.token_hex(16)
+    _, file_ext = os.path.splitext(picture_file.filename)
+    file_name = random_hex + file_ext
+    file_path = os.path.join(
+        app.root_path,'static/pictures/profile_pics', file_name)
+
+    size = (120, 120)
+    resized_pic = Image.open(picture_file)
+    resized_pic.thumbnail(size)  # resize the pic
+
+    resized_pic.save(file_path)
+    profile.profile_pic = file_name
 
 def prefill_profile_form(form, profile):
     """Prefill the profile form with the existing data.

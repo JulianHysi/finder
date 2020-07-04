@@ -4,9 +4,9 @@
 
 	  	<div class="media-body">
 
-		    <!-- <img class="profile-pic" src="{{ url_for('static', filename='pictures/profile_pics/' + profile.profile_pic) }}"> -->
+		    <img class="profile-pic" src="{{ url_for('static', filename='pictures/profile_pics/' + profile.profile_pic) }}">
 	
-			<form method="POST" action="">
+			<form method="POST" action="" enctype="multipart/form-data">
 
 				{{ form.hidden_tag() }}
 
@@ -129,6 +129,18 @@
 							</div>
 						{% else %}
 							{{ form.website(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+
+					<!-- Profile picture -->
+					<div class="form-group">
+						{{ form.profile_pic.label(class="form-control-label") }}
+						{{ form.profile_pic(class="form-control-file form-control-lg") }}
+
+						{% if form.profile_pic.errors %}
+							{% for error in form.profile_pic.errors %}
+								<span class="text-danger">{{ error }}</span>
+							{% endfor %}
 						{% endif %}
 					</div>
 
