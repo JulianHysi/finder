@@ -167,8 +167,13 @@ def update_profile_pic(profile, picture_file):
     size = (120, 120)
     resized_pic = Image.open(picture_file)
     resized_pic.thumbnail(size)  # resize the pic
-
     resized_pic.save(file_path)
+
+    old_file_name = profile.profile_pic
+    if old_file_name != 'default.png':
+        os.remove(os.path.join(
+            app.root_path, 'static/pictures/profile_pics', old_file_name))
+
     profile.profile_pic = file_name
 
 def prefill_profile_form(form, profile):

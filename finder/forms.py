@@ -59,9 +59,6 @@ class LogInForm(FlaskForm):
 class UpdateProfileForm(FlaskForm):
     """Use this class to create the profile form."""
 
-    profile_pic = FileField(
-        'Update profile picture', 
-        validators=[FileAllowed(['jpeg', 'jpg', 'png'])])
     full_name = StringField('Full name', validators=[Length(max=60)])
     nick_name = StringField('Nickname', validators=[Length(max=60)])
     email = StringField('Email', validators=[Email()])
@@ -70,5 +67,8 @@ class UpdateProfileForm(FlaskForm):
     birth_date = DateField('Birth date')
     birth_place = StringField('Birth place', validators=[Length(max=60)])
     website = StringField('Website', validators=[Length(max=60)])
+    profile_pic = FileField(
+        'Update profile picture', 
+        validators=[FileAllowed(['jpeg', 'jpg', 'png'])])
 
     submit = SubmitField('Update')
