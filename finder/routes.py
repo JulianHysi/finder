@@ -80,8 +80,8 @@ def login():
     If the user is already authenticated, redirect them to the home page.
     Render the login template.
     If the form validates, and a user with such credentials exists:
-        Log them in and redirect them to the home page.
-        But if they were trying to access a login-required page, redirect to it.
+      Log them in and redirect them to the home page.
+      But if they were trying to access a login-required page, redirect to it.
     If the form doesn't validate, re-render the login template.
     """
     if current_user.is_authenticated:
@@ -89,7 +89,8 @@ def login():
     form = LogInForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        password = form.password.data
+        if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             next_page = request.args.get('next')
             if next_page:
@@ -97,7 +98,8 @@ def login():
             else:
                 return redirect(url_for('index'))
         else:
-            flash('Login unsuccessful. Please check username and password.', 'danger')
+            flash('Login unsuccessful. Please check username and password.',
+                  'danger')
     return render_template('login.html', form=form)
 
 
@@ -125,6 +127,7 @@ def profile():
         prefill_profile_form(form, profile)
     return render_template('profile.html', profile=profile, form=form)
 
+
 def update_profile(form, profile):
     """Update the profile with the posted data.
 
@@ -148,6 +151,7 @@ def update_profile(form, profile):
     db.session.commit()
     flash('Profile information has been updated', 'info')
 
+
 def update_profile_pic(profile, picture_file):
     """Update the profile picture with the form posted file.
 
@@ -156,13 +160,14 @@ def update_profile_pic(profile, picture_file):
     Combine the 2 above to create a new and unique filename.
     Resize the uploaded picture to the wanted dimensions.
     Save the resized picture in the file system proper path.
+    Delete old profile picture from the file system.
     Update the profile_pic field on the db record.
     """
     random_hex = secrets.token_hex(16)
     _, file_ext = os.path.splitext(picture_file.filename)
     file_name = random_hex + file_ext
-    file_path = os.path.join(
-        app.root_path,'static/pictures/profile_pics', file_name)
+    file_path = os.path.join(app.root_path,'static', 'pictures',
+                             'profile_pics', file_name)
 
     size = (120, 120)
     resized_pic = Image.open(picture_file)
@@ -171,10 +176,11 @@ def update_profile_pic(profile, picture_file):
 
     old_file_name = profile.profile_pic
     if old_file_name != 'default.png':
-        os.remove(os.path.join(
-            app.root_path, 'static/pictures/profile_pics', old_file_name))
+        os.remove(os.path.join(app.root_path, 'static', 'pictures',
+                               'profile_pics', old_file_name))
 
     profile.profile_pic = file_name
+
 
 def prefill_profile_form(form, profile):
     """Prefill the profile form with the existing data.

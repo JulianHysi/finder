@@ -29,8 +29,8 @@ class SignUpForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField(
         'Password', validators=[DataRequired(), Length(min=5, max=15)])
-    confirm_password = PasswordField(
-        'Confirm password', validators=[EqualTo('password')])
+    confirm_password = PasswordField('Confirm password',
+                                     validators=[EqualTo('password')])
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
@@ -67,8 +67,7 @@ class UpdateProfileForm(FlaskForm):
     birth_date = DateField('Birth date')
     birth_place = StringField('Birth place', validators=[Length(max=60)])
     website = StringField('Website', validators=[Length(max=60)])
-    profile_pic = FileField(
-        'Update profile picture', 
-        validators=[FileAllowed(['jpeg', 'jpg', 'png'])])
+    profile_pic = FileField('Update profile picture',
+                            validators=[FileAllowed(['jpeg', 'jpg', 'png'])])
 
     submit = SubmitField('Update')
